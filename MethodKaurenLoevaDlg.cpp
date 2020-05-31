@@ -7,6 +7,8 @@
 #include "MethodKaurenLoeva.h"
 #include "MethodKaurenLoevaDlg.h"
 #include "afxdialogex.h"
+#include <fstream>
+using namespace std;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -70,7 +72,9 @@ CMethodKaurenLoevaDlg::CMethodKaurenLoevaDlg(CWnd* pParent /*=nullptr*/)
 	, radioExpSin(false)
 	, number(0)
 	, corNum(100)
-{
+	, n(3)
+	, m(3)
+{	
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
@@ -92,6 +96,8 @@ void CMethodKaurenLoevaDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_CORNUM, corNum);
 	DDX_Text(pDX, IDC_SIZE, size);
 	DDX_Text(pDX, IDC_NUMBER, number);
+	DDX_Text(pDX, IDC_M, m);
+	DDX_Text(pDX, IDC_N, n);
 }
 
 BEGIN_MESSAGE_MAP(CMethodKaurenLoevaDlg, CDialogEx)
@@ -102,6 +108,7 @@ BEGIN_MESSAGE_MAP(CMethodKaurenLoevaDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_RADIO2, &CMethodKaurenLoevaDlg::OnBnClickedRadio2)
 	ON_BN_CLICKED(IDC_RADIO3, &CMethodKaurenLoevaDlg::OnBnClickedRadio3)
 	ON_BN_CLICKED(IDC_RUNBUTTON, &CMethodKaurenLoevaDlg::OnBnClickedRunbutton)
+	ON_BN_CLICKED(IDC_MATRIX, &CMethodKaurenLoevaDlg::OnBnClickedMatrix)
 END_MESSAGE_MAP()
 
 
@@ -395,3 +402,504 @@ void CMethodKaurenLoevaDlg::OnBnClickedRunbutton()
 }
 
 
+
+
+void CMethodKaurenLoevaDlg::OnBnClickedMatrix()
+{
+	// TODO: Add your control notification handler code here
+
+	//if (n == m)
+	//{
+
+	//	double** mas = new double* [n];
+	//	for (int i = 0; i < n; i++)
+	//		mas[i] = new double[m];
+	//	
+	//	double* masTemp = new double[n * m];
+	//	for (int i = 0; i < n*m; i++)
+	//		masTemp[i] = (double)(rand() / RAND_MAX);
+	//	
+
+
+	//	for (int i = 0; i < n; i++)
+	//		for (int j = 0; j < m; j++)
+	//			mas[i][j] = masTemp[i * n + j];
+
+	//	int** triangle = new int*[n];
+	//	for (int i = 0; i < n * m; i++)
+	//		triangle[i] = new int[m];
+	//	
+	//	for (int i = 0; i < n; i++)
+	//		for (int j = 0; j < m; j++)
+	//			triangle[i][j] = (int)mas[i, j];
+
+	//	double** buf = new double* [n];
+	//	for (int i = 0; i < n; i++)
+	//		buf[i] = new double[m];
+
+	//	for (int i = 0; i < n; i++)
+	//		for (int j = 0; j < m; j++)
+	//			buf[i, j] = mas[i, j];
+	//			
+
+
+	//	double** Pryamoy = Gaus_pryamoy_hod(R_Matrix(n, buf, Matrix(N)), N, 2 * M);
+
+
+	//	Double[] U = new Double[N * M];
+	//	Double[] V = new Double[N * M];
+	//	Double[] Sigma = new Double[N * M];
+	//	Double det = Determinant(Pryamoy, N);
+	//	SVD(N, M, Mas, U, V, Sigma);
+	//	Double[, ] V_ = new Double[N, M];
+	//	Double[, ] U_ = new Double[N, M];
+	//	Double[, ] U_transponirovannaya = new Double[N, M];
+
+	//	Double[, ] Sigma_ = new Double[N, M];
+	//	for (int i = 0; i < N; i++)
+	//		for (int j = 0; j < M; j++)
+	//			V_[i, j] = V[i * 3 + j];
+
+	//	for (int i = 0; i < N; i++)
+	//		for (int j = 0; j < M; j++)
+	//			U_[i, j] = U[i * 3 + j];
+	//	for (int i = 0; i < N; i++)
+	//		for (int j = 0; j < M; j++)
+	//			U_transponirovannaya[i, j] = U_[j, i];
+
+
+
+	//	for (int i = 0; i < N; i++)
+	//	{
+	//		for (int j = 0; j < M; j++)
+	//		{
+	//			if (i == j)
+	//			{
+	//				if (Sigma[i] >= 0.1 * Sigma[0])
+	//				{
+	//					Sigma_[i, j] = 1 / Sigma[i];
+	//				}
+	//				else Sigma_[i, j] = 0;
+	//			}
+
+	//			else Sigma_[i, j] = 0;
+	//		}
+	//	}
+
+	//	Double[, ] Matr = new Double[N, M];
+	//	for (int i = 0; i < N; i++)
+	//		for (int j = 0; j < M; j++)
+	//			for (int k = 0; k < N; k++)
+	//				Matr[i, j] += V_[i, k] * Sigma_[k, j];
+
+	//	Double[, ] Psevdo_obratnaya_Matrix = new Double[N, M];
+	//	for (int i = 0; i < N; i++)
+	//		for (int j = 0; j < M; j++)
+	//			for (int k = 0; k < N; k++)
+	//				Psevdo_obratnaya_Matrix[i, j] += Matr[i, k] * U_transponirovannaya[k, j];
+	//	Double[] B = new Double[N];
+
+	//	for (int i = 0; i < N; i++)
+	//		B[i] = Convert.ToDouble(rnd.Next(-2000, 2000)) / 2000;
+
+
+	//	Double[] S = new Double[N];
+	//	Double[] Ps = new Double[N * M];
+	//	int z = 0;
+	//	for (int i = 0; i < N; i++)
+	//	{
+	//		for (int j = 0; j < M; j++)
+	//		{
+	//			Ps[z] = Psevdo_obratnaya_Matrix[i, j];
+	//			z++;
+	//		}
+	//	}
+
+	//	for (int i = 0; i < N; i++)
+	//	{
+	//		S[i] = 0.0;
+
+	//		for (int j = 0; j < N; j++)
+	//		{
+	//			S[i] += Ps[i * N + j] * B[j];
+	//		}
+
+
+	//	}
+
+	//	// Вычисление невязки:
+	//	Double E = 0.0;
+	//	for (int i = 0; i < N; i++)
+	//	{
+	//		Double M_ = 0.0;
+	//		for (int j = 0; j < N; j++)
+	//		{
+	//			M_ += Mas[i * N + j] * S[j];
+	//		}
+
+	//		E += (M_ - B[i]) * (M_ - B[i]) / N;
+	//	}
+
+	//	form.textBox_Nevayzky.Text = Convert.ToString(String.Format("{0:F4}", E));
+	//	form.textBox_det.Text = Convert.ToString(String.Format("{0:F7}", det));
+	//	StringBuilder S1 = new StringBuilder();
+	//	StringBuilder S2 = new StringBuilder();
+	//	StringBuilder S3 = new StringBuilder();
+	//	StringBuilder S4 = new StringBuilder();
+	//	StringBuilder S5 = new StringBuilder();
+	//	StringBuilder S6 = new StringBuilder();
+	//	StringBuilder S7 = new StringBuilder();
+	//	StringBuilder S8 = new StringBuilder();
+	//	//
+	//	StringBuilder sw = new StringBuilder();
+
+	//	for (int i = 0; i < N; i++)
+	//	{
+	//		for (int j = 0; j < M; j++)
+	//		{
+	//			S1.Append(Math.Round(mas[i, j], 2) + "   ");
+	//		}
+
+	//		S1.AppendLine("\n");
+	//	}
+
+	//	form.textBox_IshodMatr.TextAlign = HorizontalAlignment.Center;
+	//	form.textBox_IshodMatr.Text = S1.ToString(); //Записывем в текст бокс исходный матрицу
+
+	//	for (int i = 0; i < N; i++)
+	//	{
+	//		for (int j = 0; j < M; j++)
+	//		{
+	//			S2.Append(Math.Round(V_[i, j], 3) + "   ");
+	//		}
+
+	//		S2.AppendLine("\n");
+	//	}
+
+	//	form.textBox_MatrLS.TextAlign = HorizontalAlignment.Center;
+	//	form.textBox_MatrLS.Text = S2.ToString(); //Записывем в текстбокс левую матрицу собственных векторов
+
+
+
+	//	for (int i = 0; i < N; i++)
+	//	{
+	//		for (int j = 0; j < M; j++)
+	//		{
+	//			S3.Append(Math.Round(U_[i, j], 3) + "   ");
+	//		}
+
+	//		S3.AppendLine("\n");
+	//	}
+
+	//	form.textBox_MprS.TextAlign = HorizontalAlignment.Center;
+	//	form.textBox_MprS.Text = S3.ToString(); //Записывем в текстбокс правую матрицу собственных векторов
+
+	//	for (int i = 0; i < N; i++)
+	//	{
+	//		for (int j = 0; j < M; j++)
+	//		{
+	//			S4.Append(Math.Round(U_transponirovannaya[i, j], 3) + "   ");
+	//		}
+
+	//		S4.AppendLine("\n");
+	//	}
+
+	//	form.textBox_transpMatrL.TextAlign = HorizontalAlignment.Center;
+	//	form.textBox_transpMatrL.Text =
+	//		S4.ToString(); //Записывем в текстбокс правую матрицу собственных векторов
+
+
+
+	//	for (int i = 0; i < N; i++)
+	//	{
+	//		for (int j = 0; j < M; j++)
+	//		{
+	//			S5.Append(Math.Round(Sigma_[i, j], 3) + "   ");
+	//		}
+
+	//		S5.AppendLine("\n" + "   ");
+	//	}
+
+	//	form.textBox_SZ.TextAlign = HorizontalAlignment.Center;
+	//	form.textBox_SZ.Text = S5.ToString(); //Записывем в текстбокс матрицу соб.значений в степени -1.
+
+
+	//	for (int i = 0; i < N; i++)
+	//	{
+	//		for (int j = 0; j < M; j++)
+	//		{
+	//			S6.Append(Math.Round(Psevdo_obratnaya_Matrix[i, j], 3) + "   ");
+	//		}
+
+	//		S6.AppendLine("\n");
+	//	}
+
+	//	form.textBox_PsObr.TextAlign = HorizontalAlignment.Center;
+	//	form.textBox_PsObr.Text = S6.ToString(); //Записывем в текстбокс  псевдообратную  матрицу 
+
+	//	for (int i = 0; i < N; i++)
+	//		S7.AppendLine(Math.Round(S[i], 4) + "\n");
+	//	S7.AppendLine("\n");
+	//	form.textBox_Neizv.TextAlign = HorizontalAlignment.Center;
+	//	form.textBox_Neizv.Text = S7.ToString(); //Записывем в текстбокс  псевдообратную  матрицу 
+	//	for (int i = 0; i < N; i++)
+	//		S8.AppendLine(Math.Round(B[i], 4) + "\n");
+	//	form.textBox_svobod.TextAlign = HorizontalAlignment.Center;
+	//	form.textBox_svobod.Text = S8.ToString(); //записываем в текстбокс векстор свободных членов
+	//}
+
+	UpdateData(TRUE);
+
+	double** A = new double* [n];
+	for (int i = 0; i < n; i++)
+		A[i] = new double[m];
+
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++)
+			A[i][j] = (double)rand() * 2 / RAND_MAX - 1;
+
+	ofstream fout; // создаём объект класса ofstream для записи и связываем его с файлом cppstudio.txt
+	fout.open("cppstudio.txt"); // открываем файл для добавления информации к концу файла
+
+	if (!fout.is_open())
+	{
+		return;
+	}
+	double A00 = A[0][0];
+	double A01 = A[0][1];
+	double A02 = A[0][2];
+	double A10 = A[1][0];
+	double A11 = A[1][1];
+	double A12 = A[1][2];
+	double A20 = A[2][0];
+	double A21 = A[2][1];
+	double A22 = A[2][2];
+
+	fout << "Матрица А\n";
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			fout << A[i][j] << "  ";
+		}
+		fout << "\n";
+	}
+
+	
+
+	double* B = new double[m];
+	for (int j = 0; j < m; j++)
+		B[j] = (double)rand() * 2 / RAND_MAX - 1;
+
+	double det;
+	double* X = Reshenie(n, m, A, B, det);
+
+	fout <<"\n\n\nДетерменант "<< det ; // запись строки в файл
+
+	double* Am = new double[m * m];
+	int r = 0;
+	for (int i = 0; i < m; i++)//переход от двумерного массива в одномерный 
+		for (int j = 0; j < n; j++)
+		{
+			Am[r] = A[i][j]; r++;
+		}
+	int Iter; double b1, b2;
+	double* Sigma = new double[n];
+	U = new double[m * m];
+	V = new double[n * n];
+
+
+	Iter = svd_hestenes(m, n, Am, U, V, Sigma);
+
+	for (int i = 0; i < m; i++)//trasponirovanie+++ verno
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if ((i * n + j) < (j * n + i))
+			{
+				b1 = V[i * n + j];
+				V[i * n + j] = V[j * n + i];
+				V[j * n + i] = b1;
+
+				b2 = U[i * n + j];
+				U[i * n + j] = U[j * n + i];
+				U[j * n + i] = b2;
+			}
+		}
+	}
+
+	for (int i = 0; i < m; i++)//izmenenie sing chisel++++ verno
+	{
+
+		if (Sigma[i] != 0)
+			Sigma[i] = 1 / Sigma[i];
+		else Sigma[i] = 0;
+	}
+	double* Amx = new double[m * m];
+	for (int i = 0; i < m; i++)//proizvedenie+++ verno
+	{
+		for (int j = 0; j < n; j++)
+		{
+			Amx[i * n + j] = V[i * n + j] * Sigma[j];
+		}
+	}
+	double* Am_ = new double[m * m];
+	Proizvedenie(n, m, Amx, U, Am_);/// Ам конечная матрица
+	double* X0 = new double[n];
+	for (int i = 0; i < m; i++)
+	{
+		X0[i] = 0;
+
+	}
+
+	for (int i = 0; i < m; i++)//proizvedenie 9x3+++++
+		for (int j = 0; j < n; j++)
+		{
+
+			X0[i] += Am_[i * n + j] * B[j];
+
+		}
+
+	double X00;
+
+	fout << "\n\nВектор B\n";
+	for (int i = 0; i < n; i++)
+	{
+		fout << X0[i] << " ";
+	}
+	
+	double buf = 0;  double E = 0;
+	for (int i = 0; i < n; i++)
+	{
+		buf = 0;
+		for (int j = 0; j < m; j++)
+		{
+			buf += Am[i * n + j] * X0[j];
+		}
+		E += (B[i] - buf) * (B[i] - buf);
+	}
+	E /= m;
+	fout << "\n\n\nНевязка  "<< E <<'\n';
+
+	fout.close(); // закрываем файл
+	UpdateData(FALSE);
+}
+
+
+	double** CMethodKaurenLoevaDlg::R_Matrix(int n, double** A, double** Ed)//Расширенная матрица
+	{
+		double** R = new double* [n];
+		for (int i = 0; i < 2 * n; i++)
+			R[i] = new double[2 * n];
+
+
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < 2 * n; j++)
+				R[i][j] = ((j < n) ? A[i][j] : Ed[i][j - n]);
+
+		}
+		return R;
+	}
+
+	double** CMethodKaurenLoevaDlg::Gaus_pryamoy_hod(double** R, int n, int m)
+	{
+		double temp = 0;
+
+		for (int i = 0; i < n; i++)
+			for (int j = i + 1; j < n; j++)
+			{
+				temp = (R[i][j] / R[i][i]);
+				for (int k = i; k < m; k++)
+				{
+					R[j][k] -= (R[i][k] * temp);
+				}
+
+			}
+		return R;
+	}
+
+
+	double** CMethodKaurenLoevaDlg::Matrix(int n)//создание матрицы размером NxM
+	{
+		double** A = new double* [n];
+		for (int i = 0; i < 2 * n; i++)
+			A[i] = new double[2 * n];
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < n; j++)
+				A[i][j] = ((i == j) ? 1 : 0);
+		return A;
+	}
+
+
+double* CMethodKaurenLoevaDlg::Reshenie(int N, int M, double** A, double* B, double& det)
+{
+	double* X0 = new double[M];
+		
+	det = 0;
+	double** A1;//obr matriza
+	A1 = new double* [M];
+	for (int i = 0; i < N; i++)
+		A1[i] = new double[M];
+	A1[0][0] = (A[1][1] * A[2][2] - A[2][1] * A[1][2]);
+	A1[0][1] = -(A[1][0] * A[2][2] - A[2][0] * A[1][2]);
+	A1[0][2] = (A[1][0] * A[2][1] - A[2][0] * A[1][1]);
+
+	A1[1][0] = -(A[0][1] * A[2][2] - A[2][1] * A[0][2]);
+	A1[1][1] = (A[0][0] * A[2][2] - A[2][0] * A[0][2]);
+	A1[1][2] = -(A[0][0] * A[2][1] - A[2][0] * A[0][1]);
+
+	A1[2][0] = (A[0][1] * A[1][2] - A[1][1] * A[0][2]);
+	A1[2][1] = -(A[0][0] * A[1][2] - A[1][0] * A[0][2]);
+	A1[2][2] = (A[0][0] * A[1][1] - A[1][0] * A[0][1]);
+
+	det += A1[0][0] * A[0][0];
+	det += A1[1][0] * A[1][0];
+	det += A1[2][0] * A[2][0];
+
+	double s;
+	s = A1[1][0]; A1[1][0] = A1[0][1]; A1[0][1] = s;
+	s = A1[2][0]; A1[2][0] = A1[0][2]; A1[0][2] = s;
+	s = A1[2][1]; A1[2][1] = A1[1][2]; A1[1][2] = s;
+	/*ofstream file("ReadMe.txt");
+	for (int t = 0; t < N; t++)
+	{
+	for (int i = 0; i < N; i++)
+	{
+	file.width(10);
+	file << A1[t][i] << setw(5) << endl;
+	}
+	}
+	file.close();*/
+	for (int i = 0; i < N; i++)
+		for (int j = 0; j < M; j++)
+			A1[i][j] = A1[i][j] / det;//polychili obr matrizy
+
+
+
+	for (int i = 0; i < N; i++)
+		for (int j = 0; j < M; j++)
+			X0[i] += A1[i][j] * B[j];
+
+	return X0;
+}
+
+void CMethodKaurenLoevaDlg::Proizvedenie(int N, int M, double* A1, double* A2, double* Am)
+{
+	for (int j = 0; j < N * M; j++)
+	{
+		Am[j] = 0;
+	}
+	for (int i = 0; i < M; i++)//proizvedenie
+	{
+		for (int j = 0; j < N; j++)
+		{
+			for (int q = 0; q < N; q++)
+			{
+				Am[i * N + j] += A1[i * N + q] * A2[q * N + j];
+
+			}
+		}
+	}
+}

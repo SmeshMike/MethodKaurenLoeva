@@ -34,8 +34,11 @@
 #define IDC_FREQUENCY                   1024
 #define IDC_PHASE                       1025
 #define IDC_ATTENCOEF                   1026
-#define IDC_PHASE2                      1029
+#define IDC_MATRIX                      1027
+#define IDC_M                           1028
 #define IDC_CENTER                      1029
+#define IDC_C6                          1030
+#define IDC_N                           1030
 
 // Next default values for new objects
 // 
@@ -43,7 +46,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        130
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1026
+#define _APS_NEXT_CONTROL_VALUE         1028
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

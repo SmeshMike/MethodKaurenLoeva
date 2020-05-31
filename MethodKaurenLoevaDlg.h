@@ -25,7 +25,11 @@ public:
 	void setka(CDC* pDC, CRect rect, vector <double> A, double x0, double x1);// Сетки
 	void zoom(vector <double> A);// Функция для автоподстройки границ графика по оси у
 	void picture(CDC* pDC, CRect rect, vector <double> A, double x0, double x1);// Функция вызывающая методы сетка и зум
-
+	double** R_Matrix(int n, double** A, double** Ed);//Расширенная матрица
+	double** Gaus_pryamoy_hod(double** R, int n, int m);
+	double** CMethodKaurenLoevaDlg::Matrix(int n);
+	double* Reshenie(int N, int M, double** A, double* B, double& det);
+	void Proizvedenie(int N, int M, double* A1, double* A2, double* Am);
 
 // Implementation
 protected:
@@ -54,6 +58,8 @@ public:
 	int corNum;
 	int size;
 	int number;
+	int m;
+	int n;
 	bool radioSin;
 	bool radioExp;
 	bool radioExpSin;
@@ -95,4 +101,5 @@ public:
 	afx_msg void OnBnClickedRadio2();
 	afx_msg void OnBnClickedRadio3();
 	afx_msg void OnBnClickedRunbutton();
+	afx_msg void OnBnClickedMatrix();
 };
