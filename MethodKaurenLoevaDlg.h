@@ -65,6 +65,7 @@ public:
 	bool radioExpSin;
 	bool forSignal;
 	bool forOther;
+	BOOL check;
 	vector <double> signal;
 	vector <double> sigmaGraph, V1, V2, V3;
 	double* corr;
@@ -102,4 +103,5 @@ public:
 	afx_msg void OnBnClickedRadio3();
 	afx_msg void OnBnClickedRunbutton();
 	afx_msg void OnBnClickedMatrix();
+	afx_msg void OnBnClickedCheck();
 };

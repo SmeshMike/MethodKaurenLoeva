@@ -74,6 +74,7 @@ CMethodKaurenLoevaDlg::CMethodKaurenLoevaDlg(CWnd* pParent /*=nullptr*/)
 	, corNum(100)
 	, n(3)
 	, m(3)
+	, check(FALSE)
 {	
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -98,6 +99,7 @@ void CMethodKaurenLoevaDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_NUMBER, number);
 	DDX_Text(pDX, IDC_M, m);
 	DDX_Text(pDX, IDC_N, n);
+	DDX_Check(pDX, IDC_CHECK, check);
 }
 
 BEGIN_MESSAGE_MAP(CMethodKaurenLoevaDlg, CDialogEx)
@@ -109,6 +111,7 @@ BEGIN_MESSAGE_MAP(CMethodKaurenLoevaDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_RADIO3, &CMethodKaurenLoevaDlg::OnBnClickedRadio3)
 	ON_BN_CLICKED(IDC_RUNBUTTON, &CMethodKaurenLoevaDlg::OnBnClickedRunbutton)
 	ON_BN_CLICKED(IDC_MATRIX, &CMethodKaurenLoevaDlg::OnBnClickedMatrix)
+	ON_BN_CLICKED(IDC_CHECK, &CMethodKaurenLoevaDlg::OnBnClickedCheck)
 END_MESSAGE_MAP()
 
 
@@ -647,56 +650,100 @@ void CMethodKaurenLoevaDlg::OnBnClickedMatrix()
 	//	form.textBox_svobod.TextAlign = HorizontalAlignment.Center;
 	//	form.textBox_svobod.Text = S8.ToString(); //записываем в текстбокс векстор свободных членов
 	//}
+	
 
-	UpdateData(TRUE);
-
+	ofstream fout;
 	double** A = new double* [n];
 	for (int i = 0; i < n; i++)
 		A[i] = new double[m];
-
-	for (int i = 0; i < n; i++)
-		for (int j = 0; j < m; j++)
-			A[i][j] = (double)rand() * 2 / RAND_MAX - 1;
-
-	ofstream fout; // создаём объект класса ofstream для записи и связываем его с файлом cppstudio.txt
-	fout.open("cppstudio.txt"); // открываем файл для добавления информации к концу файла
-
-	if (!fout.is_open())
-	{
-		return;
-	}
-	double A00 = A[0][0];
-	double A01 = A[0][1];
-	double A02 = A[0][2];
-	double A10 = A[1][0];
-	double A11 = A[1][1];
-	double A12 = A[1][2];
-	double A20 = A[2][0];
-	double A21 = A[2][1];
-	double A22 = A[2][2];
-
-	fout << "Матрица А\n";
-
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < m; j++)
-		{
-			fout << A[i][j] << "  ";
-		}
-		fout << "\n";
-	}
-
-	
 
 	double* B = new double[m];
 	for (int j = 0; j < m; j++)
 		B[j] = (double)rand() * 2 / RAND_MAX - 1;
 
-	double det;
-	double* X = Reshenie(n, m, A, B, det);
 
-	fout <<"\n\n\nДетерменант "<< det ; // запись строки в файл
+	UpdateData(TRUE);
+	if (!check)
+	{
 
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < m; j++)
+				A[i][j] = (double)rand() * 2 / RAND_MAX - 1;
+
+		// создаём объект класса ofstream для записи и связываем его с файлом cppstudio.txt
+		fout.open("cppstudio.txt"); // открываем файл для добавления информации к концу файла
+
+		if (!fout.is_open())
+		{
+			return;
+		}
+
+		fout << "Матрица А\n";
+
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < m; j++)
+			{
+				fout << A[i][j] << "  ";
+			}
+			fout << "\n";
+		}
+
+
+		double det;
+		double* X = Reshenie(n, m, A, B, det);
+
+		fout << "\n\n\nДетерменант " << det; // запись строки в файл
+	}
+	else
+	{
+
+		A[0][0] = 1;
+		A[0][1] = 2;
+		A[0][2] = 3;
+		A[1][0] = 4;
+		A[1][1] = 5;
+		A[1][2] = 6;
+		A[2][0] = 7;
+		A[2][1] = 8;
+		A[2][2] = 9;
+
+		 // создаём объект класса ofstream для записи и связываем его с файлом cppstudio.txt
+		fout.open("cppstudio.txt"); // открываем файл для добавления информации к концу файла
+
+		if (!fout.is_open())
+		{
+			return;
+		}
+
+		fout << "Матрица А\n";
+
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < m; j++)
+			{
+				fout << A[i][j] << "  ";
+			}
+			fout << "\n";
+		}
+
+
+
+		double det;
+		double* X = Reshenie(n, m, A, B, det);
+
+		fout << "\n\n\nДетерменант " << det; // запись строки в файл
+		A[0][0] += (double)rand() * 0.05 / RAND_MAX;
+		A[0][1] += (double)rand() * 0.05 / RAND_MAX;
+		A[0][2] += (double)rand() * 0.05 / RAND_MAX;
+		A[1][0] += (double)rand() * 0.05 / RAND_MAX;
+		A[1][1] += (double)rand() * 0.05 / RAND_MAX;
+		A[1][2] += (double)rand() * 0.05 / RAND_MAX;
+		A[2][0] += (double)rand() * 0.05 / RAND_MAX;
+		A[2][1] += (double)rand() * 0.05 / RAND_MAX;
+		A[2][2] += (double)rand() * 0.05 / RAND_MAX;
+
+	}
 	double* Am = new double[m * m];
 	int r = 0;
 	for (int i = 0; i < m; i++)//переход от двумерного массива в одномерный 
@@ -902,4 +949,24 @@ void CMethodKaurenLoevaDlg::Proizvedenie(int N, int M, double* A1, double* A2, d
 			}
 		}
 	}
+}
+
+void CMethodKaurenLoevaDlg::OnBnClickedCheck()
+{
+	// TODO: Add your control notification handler code here
+	//
+	if (check)
+	{
+		check = false;
+	}
+	else 
+	{
+
+		check = true;
+		UpdateData(TRUE);
+		m = 3;
+		n = 3;
+		UpdateData(FALSE);
+	}
+	
 }
